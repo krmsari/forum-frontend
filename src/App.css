@@ -1,0 +1,10 @@
+/* Tüm sayfalardaki kaydırma çubuğunu gizlemek için */
+body {
+  overflow: auto; /* Kaydırma işlevselliğini korur */
+}
+
+/* Webkit tabanlı tarayıcılarda kaydırma çubuğunu gizlemek için */
+body::-webkit-scrollbar {
+  width: 0; /* Dikey kaydırma çubuğunu gizler */
+  height: 0; /* Yatay kaydırma çubuğunu gizler */
+}

@@ -1,0 +1,24 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #efefef;
+}
+.card{
+    margin: 10px;
+    box-shadow: 0 6px 20px 0 rgba(0,0,0,0.2);
+}
+.author-profile{
+    transition: width 0.3s ease, height 0.3s ease; /* Genişlik ve yükseklik değişimlerini gecikmeli yap */
+}
+.author-profile:hover{
+    width: 42px;
+    height: 42px;
+}
+.author-name{
+    color: rgb(74, 74, 74);
+    font-size: 12px;
+    transition: 0.4s ease; /* Renk değişimini gecikmeli yap */
+}
+.author-name:hover{
+    font-size: 11px;
+    color: rgb(0, 0, 0);
+}
