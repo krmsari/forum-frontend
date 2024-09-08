@@ -13,7 +13,6 @@ import { styled } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import "./post.css";
 import { Link } from "react-router-dom";

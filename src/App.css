@@ -1,6 +1,7 @@
 /* Tüm sayfalardaki kaydırma çubuğunu gizlemek için */
 body {
   overflow: auto; /* Kaydırma işlevselliğini korur */
+  user-select: none;
 }
 
 /* Webkit tabanlı tarayıcılarda kaydırma çubuğunu gizlemek için */
