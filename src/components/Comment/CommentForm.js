@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   TextField,
   Button,
@@ -8,6 +8,7 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const CommentForm = (props) => {
   const { userId, postId, fetchComments } = props;
@@ -35,7 +36,6 @@ const CommentForm = (props) => {
     setText(text);
   };
 
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -46,6 +46,7 @@ const CommentForm = (props) => {
   const handleCommentSubmit = () => {
     setIsSent(true);
     saveComment();
+    console.log("yorum yüklendi"); //<<==
     setText("");
     fetchComments();
   };
@@ -57,9 +58,26 @@ const CommentForm = (props) => {
           Yorum gönderildi.
         </Alert>
       </Snackbar>
-      <Card sx={{ maxWidth: 600, margin: "auto", mt: 5 }}>
+
+      <Card
+        sx={{
+          maxWidth: 600,
+          margin: "auto",
+          mt: 5,
+          maxWidth: 800,
+          minWidth: 800,
+          boxShadow: 8,
+          border: 1,
+          borderColor: grey[400],
+          borderRadius: 2,
+        }}
+      >
         <CardContent>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom
+          sx={
+            {textAlign: "center", fontWeight: "bold", fontSize: 20} 
+            
+          }>
             Yorumlar
           </Typography>
           <TextField
@@ -70,7 +88,7 @@ const CommentForm = (props) => {
             rows={4}
             value={text}
             onChange={(i) => handleTextChange(i.target.value)}
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, boxShadow: 15 }}
           />
           <Button
             variant="contained"

@@ -90,7 +90,7 @@ function PostForm(props) {
               placeholder="Başlık"
               value={title}
               inputProps={{ maxLength: 50 }}
-              sx={{ fontSize: 12, height: 40 }}
+              sx={{ fontSize: 14, height: 40, fontWeight: "bold" }}
               fullWidth
               onChange={(i) => handleTitle(i.target.value)}
             ></OutlinedInput>
@@ -114,7 +114,7 @@ function PostForm(props) {
               placeholder="Açıklama"
               value={text}
               inputProps={{ maxLength: 500 }}
-              sx={{ fontSize: 12, height: 50 }}
+              sx={{ fontSize: 14, height: 50, fontWeight: "bold" }}
               fullWidth
               onChange={(i) => handleText(i.target.value)}
               endAdornment={

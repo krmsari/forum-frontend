@@ -10,8 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React, { useEffect, useState } from "react";
-import { red } from "@mui/material/colors";
+import React, { useState } from "react";
+import { red,grey } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import "./post.css";
@@ -44,16 +44,24 @@ function Post(props) {
     fetchComments();
     setExpanded(!expanded);
   };
-  // useEffect(() => {  
-  //   fetchComments();  //yorum ekleyince güncellemek için ama 
-  // }, [comments]); 
 
   const handleLiked = () => {
     setLiked(!liked);
   };
 
   return (
-    <Card className="card" sx={{ maxWidth: 800, minWidth: 800 }}>
+    <Card
+      className="card"
+      sx={{
+        padding: 0.5,
+        maxWidth: 800,
+        minWidth: 800,
+        boxShadow: 15,
+        border: 1,
+        borderColor: grey[500],
+        borderRadius: 2,
+      }}
+    >
       <CardHeader
         className="card-header"
         avatar={
@@ -87,6 +95,12 @@ function Post(props) {
         }
       />
       <CardMedia
+        sx={{
+          borderRadius: 2,
+          border: 1,
+          borderColor: grey[400],
+          boxShadow: 20,
+        }}
         component="img"
         height="194"
         image="https://picsum.photos/1980/1080"
@@ -111,7 +125,11 @@ function Post(props) {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CommentForm postId={postId} userId={userId}  fetchComments={fetchComments}/>
+        <CommentForm
+          postId={postId}
+          userId={userId}
+          fetchComments={fetchComments}
+        />
         {comments.map((comment) => (
           <Comment
             userId={comment.userId}

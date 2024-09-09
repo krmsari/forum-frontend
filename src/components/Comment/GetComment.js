@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 // getComments fonksiyonunu tanımlayın ve dışa aktarın
 export const getComments = async (postId) => {

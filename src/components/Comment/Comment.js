@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardHeader, CardContent, Typography, Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField, Button } from '@mui/material';
-import { red } from '@mui/material/colors';
-
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Avatar,
+} from "@mui/material";
+import { grey, red } from "@mui/material/colors";
 
 function Comment(props) {
   const { userId, text, author } = props;
 
-
   return (
-    <Card className="card" sx={{ maxWidth: 800, minWidth: 800 }}>
+    <Card
+      sx={{
+        margin: 2,
+        boxShadow: 15,
+        border: 1,
+        borderColor: grey[500],
+        borderRadius: 2,
+      }}
+    >
       <CardHeader
-        className="card-header"
         avatar={
           <Link to={`/users/${userId}`}>
             <Avatar

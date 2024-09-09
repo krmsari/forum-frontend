@@ -24,9 +24,13 @@ function Home() {
       );
   };
 
+  
   useEffect(() => {
+    if(isLoaded) return; // eğer veriler yüklendiyse tekrar yükleme yapma
     refreshPosts(); // sayfa yüklendiğinde verileri çekmek için refreshPosts fonksiyonunu çağırıyoruz
+    console.log("postlar yüklendi");
   }, [postList]);
+
 
   if (error) {
     return <div>Hata: {error.message}</div>; // hata durumunda hata mesajını göster
