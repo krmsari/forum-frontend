@@ -19,6 +19,8 @@ function PostForm(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [isSent, setIsSent] = useState(false);
+  const [message, setMessage] = useState("");
+  const [state, setState] = useState("");
 
   const handleTitle = (title) => {
     setIsSent(false);
@@ -49,6 +51,15 @@ function PostForm(props) {
         userId: userId,
       }),
     })
+      .then((res) => {
+        if (res.ok) {
+          setMessage("Post başarıyla oluşturuldu !");
+          setState("success");
+        } else {
+          setMessage("Post oluşturulamadı!");
+          setState("error");
+        }
+      })
       .then((res) => res.json())
       .catch((error) => console.log(error));
   };
@@ -64,8 +75,8 @@ function PostForm(props) {
   return (
     <div>
       <Snackbar open={isSent} autoHideDuration={1200} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Post başarıyla oluşturuldu!
+        <Alert onClose={handleClose} severity={state} sx={{ width: "100%" }}>
+          {message}
         </Alert>
       </Snackbar>
 
@@ -84,16 +95,16 @@ function PostForm(props) {
             </Link>
           }
           subheader={
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              multiline
-              placeholder="Başlık"
-              value={title}
-              inputProps={{ maxLength: 50 }}
-              sx={{ fontSize: 14, height: 40, fontWeight: "bold" }}
-              fullWidth
-              onChange={(i) => handleTitle(i.target.value)}
-            ></OutlinedInput>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                multiline
+                placeholder="Başlık"
+                value={title}
+                inputProps={{ maxLength: 50 }}
+                sx={{ fontSize: 14, height: 40, fontWeight: "bold" }}
+                fullWidth
+                onChange={(i) => handleTitle(i.target.value)}
+              ></OutlinedInput>
           }
           title={
             <Link
@@ -122,7 +133,10 @@ function PostForm(props) {
                   <Button
                     sx={{ width: 15, fontSize: 10 }}
                     variant="contained"
-                    style={{ backgroundColor: "background: linear-gradient(45deg, #d2d2d2 30%, #fdfbfa 90%)" }}
+                    style={{
+                      backgroundColor:
+                        "background: linear-gradient(45deg, #d2d2d2 30%, #fdfbfa 90%)",
+                    }}
                     onClick={handleSubmit}
                   >
                     Gönder

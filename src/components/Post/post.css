@@ -1,6 +1,5 @@
 body{
     font-family: 'Roboto', sans-serif;
-    background-color: #efefef;
 }
 .card{
     margin: 10px;
@@ -10,8 +9,8 @@ body{
     transition: width 0.3s ease, height 0.3s ease; /* Genişlik ve yükseklik değişimlerini gecikmeli yap */
 }
 .author-profile:hover{
-    width: 42px;
-    height: 42px;
+    width: 41px;
+    height: 41px;
 }
 .author-name{
     color: rgb(74, 74, 74);
@@ -21,4 +20,10 @@ body{
 .author-name:hover{
     font-size: 11px;
     color: rgb(0, 0, 0);
+}
+.delete-icon:active{
+    color: rgb(253, 55, 55);
+}
+.update-icon:active{
+    color: rgb(14, 207, 0);
 }

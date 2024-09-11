@@ -45,7 +45,7 @@ function RegisterForm() {
     setLastName(lastName);
     setIsSent(false);
   };
-  
+
   const handelUsername = (username) => {
     setUsername(username);
     setIsSent(false);
@@ -71,7 +71,6 @@ function RegisterForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Form verilerini işleme kodu buraya gelecek
-    console.log({ firstName, lastName, email, password });
     savePost();
     setIsSent(true);
   };

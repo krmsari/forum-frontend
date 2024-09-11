@@ -8,9 +8,11 @@ import {
   Avatar,
 } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
+import DeleteTool from "../Tools/DeleteTool";
+import UpdateTool from "../Tools/UpdateIcon";
 
 function Comment(props) {
-  const { userId, text, author } = props;
+  const { id: key, userId, text, author,refresh } = props;
 
   return (
     <Card
@@ -40,6 +42,8 @@ function Comment(props) {
         <Typography variant="body2" color="textSecondary" component="p">
           {text}
         </Typography>
+        <DeleteTool entity="comments" id={key} refresh={refresh} />
+        <UpdateTool entity="comments" id={key} refresh={refresh} />
       </CardContent>
     </Card>
   );

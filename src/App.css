@@ -3,9 +3,6 @@ body {
   overflow: auto; /* Kaydırma işlevselliğini korur */
   user-select: none;
 }
-.App{
-  background-color: rgb(197, 197, 197);
-}
 
 /* Webkit tabanlı tarayıcılarda kaydırma çubuğunu gizlemek için */
 body::-webkit-scrollbar {

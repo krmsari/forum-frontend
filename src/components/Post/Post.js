@@ -3,7 +3,6 @@ import {
   Card,
   CardHeader,
   CardActions,
-  CardContent,
   CardMedia,
   Collapse,
   IconButton,
@@ -11,14 +10,18 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
-import { red,grey } from "@mui/material/colors";
+import { red, grey } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import "./post.css";
 import { Link } from "react-router-dom";
-import { getComments } from "../Comment/GetComment";
+import { getData } from "../Fetchs/Get";
 import CommentForm from "../Comment/CommentForm";
 import Comment from "../Comment/Comment";
+import UpdateTool from "../Tools/UpdateTool";
+import DeleteTool from "../Tools/DeleteTool";
+import UpdateIcon from "../Tools/UpdateIcon";
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -30,13 +33,15 @@ const ExpandMore = styled((props) => {
 }));
 
 function Post(props) {
-  const { postId, title, text, author, userId } = props;
+  const { postId, title, text, author, userId, refresh } = props;
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const fetchComments = async () => {
-    const commentsData = await getComments(postId);
+    const commentsData = await getData("comments", postId);
+    console.log(props);
     setComments(commentsData);
   };
 
@@ -48,6 +53,7 @@ function Post(props) {
   const handleLiked = () => {
     setLiked(!liked);
   };
+
 
   return (
     <Card
@@ -106,15 +112,27 @@ function Post(props) {
         image="https://picsum.photos/1980/1080"
         alt="Post Image"
       />
-      <CardContent>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {text}
-        </Typography>
-      </CardContent>
+      <UpdateTool
+        title={title}
+        text={text}
+        isUpdate={isUpdate}
+        setIsUpdate={setIsUpdate}
+        postId={postId}
+        refreshPosts={refresh}
+      />
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={handleLiked}>
           <FavoriteIcon style={liked ? { color: "red" } : null} />
         </IconButton>
+
+        <DeleteTool entity="posts" id={postId} refresh={refresh} />
+
+        <UpdateIcon
+          isUpdate={isUpdate}
+          setIsUpdate={setIsUpdate}
+          refresh={refresh}
+        />
+
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}

@@ -46,7 +46,6 @@ const CommentForm = (props) => {
   const handleCommentSubmit = () => {
     setIsSent(true);
     saveComment();
-    console.log("yorum yüklendi"); //<<==
     setText("");
     fetchComments();
   };
@@ -61,7 +60,6 @@ const CommentForm = (props) => {
 
       <Card
         sx={{
-          maxWidth: 600,
           margin: "auto",
           mt: 5,
           maxWidth: 800,
