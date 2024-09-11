@@ -9,12 +9,13 @@ function Notice(props) {
     setIsSent(false);
   };
 
-  const { isSent, setIsSent, message, time , state } = props;
-
-  <Snackbar open={isSent} autoHideDuration={time} onClose={handleClose}>
-    <Alert onClose={handleClose} severity={state} sx={{ width: "100%" }}>
-      {message}
-    </Alert>
-  </Snackbar>;
+  const { isSent, setIsSent, message, time, state } = props;
+  return (
+    <Snackbar open={isSent} autoHideDuration={time} onClose={handleClose}>
+      <Alert onClose={handleClose} severity={state} sx={{ width: "100%" }}>
+        {message}
+      </Alert>
+    </Snackbar>
+  );
 }
 export default Notice;

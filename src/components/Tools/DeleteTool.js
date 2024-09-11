@@ -13,15 +13,13 @@ function DeleteTool(props) {
   };
 
   return (
-    <div style={{display:"flex", justifyContent:"flex-end"}}>
-      <IconButton
-        className="delete-icon"
-        onClick={handleDeleted}
-        sx={{ alignItems: "right" }}
-      >
-        <DeleteIcon className="delete-icon" />
-      </IconButton>
-    </div>
+    <IconButton
+      className="delete-icon"
+      onClick={handleDeleted}
+      sx={{ alignItems: "right" }}
+    >
+      <DeleteIcon className="delete-icon" />
+    </IconButton>
   );
 }
 

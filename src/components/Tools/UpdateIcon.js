@@ -10,7 +10,11 @@ function UpdateIcon(props) {
   };
 
   return (
-    <IconButton className="delete-icon" onClick={handleUpdate}>
+    <IconButton
+      className="delete-icon"
+      onClick={handleUpdate}
+      sx={{ alignItems: "right" }}
+    >
       <UpgradeIcon sx={{ fontSize: 30 }} className="update-icon" />
     </IconButton>
   );

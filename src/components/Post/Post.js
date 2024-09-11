@@ -54,7 +54,6 @@ function Post(props) {
     setLiked(!liked);
   };
 
-
   return (
     <Card
       className="card"
@@ -113,6 +112,7 @@ function Post(props) {
         alt="Post Image"
       />
       <UpdateTool
+        entity = "posts"
         title={title}
         text={text}
         isUpdate={isUpdate}
@@ -150,9 +150,12 @@ function Post(props) {
         />
         {comments.map((comment) => (
           <Comment
+            commentId={comment.id}
+            postId={comment.postId}
             userId={comment.userId}
             text={comment.text}
             author={comment.username}
+            refresh={fetchComments}
           />
         ))}
       </Collapse>

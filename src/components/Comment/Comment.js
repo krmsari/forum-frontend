@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -9,10 +9,12 @@ import {
 } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
 import DeleteTool from "../Tools/DeleteTool";
-import UpdateTool from "../Tools/UpdateIcon";
+import UpdateTool from "../Tools/UpdateTool";
+import UpdateIcon from "../Tools/UpdateIcon";
 
 function Comment(props) {
-  const { id: key, userId, text, author,refresh } = props;
+  const [isUpdate, setIsUpdate] = useState(false);
+  const { commentId, userId, text, author, refresh, postId } = props;
 
   return (
     <Card
@@ -39,11 +41,25 @@ function Comment(props) {
         subheader={author}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {text}
-        </Typography>
-        <DeleteTool entity="comments" id={key} refresh={refresh} />
-        <UpdateTool entity="comments" id={key} refresh={refresh} />
+        <UpdateTool
+          entity="comments"
+          id={commentId}
+          postId={postId}
+          userId={userId}
+          text={text}
+          refreshPosts={refresh}
+          isUpdate={isUpdate}
+          setIsUpdate={setIsUpdate}
+        />
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <UpdateIcon
+            entity="comments"
+            isUpdate={isUpdate}
+            setIsUpdate={setIsUpdate}
+            refresh={refresh}
+          />
+          <DeleteTool entity="comments" id={commentId} refresh={refresh} />
+        </div>
       </CardContent>
     </Card>
   );
