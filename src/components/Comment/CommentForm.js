@@ -5,58 +5,50 @@ import {
   Card,
   CardContent,
   Typography,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import Notice from "../Tools/Notice";
+import { postData } from "../Fetchs/PostData";
 
 const CommentForm = (props) => {
   const { userId, postId, fetchComments } = props;
   const [text, setText] = useState("");
   const [isSent, setIsSent] = useState(false);
-
-  const saveComment = () => {
-    fetch("/comments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: text,
-        postId: postId,
-        userId: userId,
-      }),
-    })
-      .then((res) => res.json())
-      .catch((error) => console.log(error));
-  };
+  const [message, setMessage] = useState("");
+  const [state, setState] = useState("");
 
   const handleTextChange = (text) => {
     setIsSent(false);
     setText(text);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setIsSent(false);
-  };
-
   const handleCommentSubmit = () => {
     setIsSent(true);
-    saveComment();
+    const post = postData("comments", text, postId, userId);
+    post.then((data) => {
+      if (data) {
+        setMessage("Yorum başarıyla gönderildi!");
+        setState("success");
+      } else {
+        setMessage("Yorum gönderilemedi!");
+        setState("error");
+      }
+    });
     setText("");
     fetchComments();
   };
 
   return (
     <div>
-      <Snackbar open={isSent} autoHideDuration={900} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Yorum gönderildi.
-        </Alert>
-      </Snackbar>
+      <div>
+        <Notice
+          message={message}
+          isSent={isSent}
+          setIsSent={setIsSent}
+          time={1200}
+          state={state}
+        />
+      </div>
 
       <Card
         sx={{
@@ -71,11 +63,11 @@ const CommentForm = (props) => {
         }}
       >
         <CardContent>
-          <Typography variant="h6" gutterBottom
-          sx={
-            {textAlign: "center", fontWeight: "bold", fontSize: 20} 
-            
-          }>
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{ textAlign: "center", fontWeight: "bold", fontSize: 20 }}
+          >
             Yorumlar
           </Typography>
           <TextField

@@ -7,12 +7,12 @@ import {
   OutlinedInput,
   InputAdornment,
   Button,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import React, { useState } from "react";
 import { red } from "@mui/material/colors";
 import { Link } from "react-router-dom";
+import Notice from "../Tools/Notice";
+import { postData } from "../Fetchs/PostData";
 
 function PostForm(props) {
   const { author, userId, refresh } = props;
@@ -32,40 +32,18 @@ function PostForm(props) {
     setText(text);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setIsSent(false);
-  };
-
-  const savePost = () => {
-    fetch("/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        text: text,
-        userId: userId,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          setMessage("Post başarıyla oluşturuldu !");
-          setState("success");
-        } else {
-          setMessage("Post oluşturulamadı!");
-          setState("error");
-        }
-      })
-      .then((res) => res.json())
-      .catch((error) => console.log(error));
-  };
 
   const handleSubmit = () => {
-    savePost();
+    const data = postData("posts", text, undefined, userId, title);
+    data.then((data) => {
+      if (data) {
+        setMessage("Başarıyla gönderildi!");
+        setState("success");
+      } else {
+        setMessage("Bir hata oluştu!");
+        setState("error");
+      }
+    });
     refresh();
     setIsSent(true);
     setTitle("");
@@ -74,11 +52,15 @@ function PostForm(props) {
 
   return (
     <div>
-      <Snackbar open={isSent} autoHideDuration={1200} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={state} sx={{ width: "100%" }}>
-          {message}
-        </Alert>
-      </Snackbar>
+      <div>
+        <Notice
+          message={message}
+          isSent={isSent}
+          setIsSent={setIsSent}
+          time={1200}
+          state={state}
+        />
+      </div>
 
       <Card className="card" sx={{ maxWidth: 1900, minWidth: 800 }}>
         <CardHeader
@@ -95,16 +77,16 @@ function PostForm(props) {
             </Link>
           }
           subheader={
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                multiline
-                placeholder="Başlık"
-                value={title}
-                inputProps={{ maxLength: 50 }}
-                sx={{ fontSize: 14, height: 40, fontWeight: "bold" }}
-                fullWidth
-                onChange={(i) => handleTitle(i.target.value)}
-              ></OutlinedInput>
+            <OutlinedInput
+              id="outlined-adornment-amount"
+              multiline
+              placeholder="Başlık"
+              value={title}
+              inputProps={{ maxLength: 50 }}
+              sx={{ fontSize: 14, height: 40, fontWeight: "bold" }}
+              fullWidth
+              onChange={(i) => handleTitle(i.target.value)}
+            ></OutlinedInput>
           }
           title={
             <Link

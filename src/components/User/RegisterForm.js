@@ -1,14 +1,14 @@
 import {
-  Alert,
   Box,
   Button,
   Container,
   CssBaseline,
-  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { postData } from "../Fetchs/PostData";
+import Notice from "../Tools/Notice";
 
 function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -16,25 +16,9 @@ function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [state, setState] = useState("");
   const [isSent, setIsSent] = useState(false);
-
-  const savePost = () => {
-    fetch("/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: firstName,
-        surname: lastName,
-        username: username,
-        email: email,
-        password: password,
-      }),
-    })
-      .then((res) => res.json())
-      .catch((error) => console.log(error));
-  };
 
   const handleFirstName = (firstName) => {
     setFirstName(firstName);
@@ -61,32 +45,43 @@ function RegisterForm() {
     setIsSent(false);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setIsSent(false);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     // Form verilerini işleme kodu buraya gelecek
-    savePost();
+    const data = postData(
+      "users",
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      firstName,
+      lastName,
+      username,
+      email,
+      password
+    );
+    data.then((data) => {
+      if (data) {
+        setMessage("Başarıyla kayıt oldunuz!");
+        setState("success");
+      } else {
+        setMessage("Kayıt olunamadı!");
+        setState("error");
+      }
+    });
     setIsSent(true);
   };
 
   return (
     <React.Fragment>
       <div>
-        <Snackbar open={isSent} autoHideDuration={1000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Kullanıcı başarıyla kaydedildi!
-          </Alert>
-        </Snackbar>
+        <Notice
+          message={message}
+          isSent={isSent}
+          setIsSent={setIsSent}
+          time={1200}
+          state={state}
+        />
       </div>
       <CssBaseline />
       <Container maxWidth="sm">

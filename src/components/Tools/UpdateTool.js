@@ -5,14 +5,24 @@ import {
   CardContent,
   InputAdornment,
   OutlinedInput,
-  Snackbar,
   Typography,
 } from "@mui/material";
 import { updateData } from "../Fetchs/Update";
 import Notice from "./Notice";
 
 function UpdateTool(props) {
-  const { entity, title, text, postId, refreshPosts, isUpdate, setIsUpdate } = props;
+  
+  const {
+    entity,
+    title,
+    text,
+    postId,
+    userId,
+    commentId,
+    refreshPosts,
+    isUpdate,
+    setIsUpdate,
+  } = props;
   const [newText, setNewText] = useState(text);
   const [message, setMessage] = useState("");
   const [state, setState] = useState("");
@@ -23,25 +33,31 @@ function UpdateTool(props) {
   };
 
   const handleSubmit = () => {
-    const messages = updateData("posts", postId, title, newText);
+    const messages = updateData(
+      entity,
+      postId,
+      title,
+      newText,
+      userId,
+      commentId,
+      text
+    );
     messages.then((data) => {
-      setMessage(data[0]);
-      setState(data[1]);
+      if (data) {
+        setMessage("Başarıyla güncellendi!");
+        setState("success");
+      } else {
+        setMessage("Bir hata oluştu!");
+        setState("error");
+      }
     });
     refreshPosts();
-    handleClose();
     setIsUpdate(false);
     setIsSent(true);
   };
-  
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setIsSent(false);
-  };
+
   return (
-    <Typography>
+    <div>
       <div>
         <Notice
           message={message}
@@ -71,7 +87,7 @@ function UpdateTool(props) {
           </Typography>
         )}
       </CardContent>
-    </Typography>
+    </div>
   );
 }
 export default UpdateTool;

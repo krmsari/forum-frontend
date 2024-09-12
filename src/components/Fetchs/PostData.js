@@ -1,34 +1,31 @@
-export const updateData = async (
+export const postData = async (
   entity,
-  postId,
-  title,
   text,
+  postId,
   userId,
-  commentId,
+  title,
+  firstName,
+  lastName,
+  username,
+  email,
+  password
 ) => {
   try {
-    let id = 0;
-    switch (entity) {
-      case "posts":
-        id = postId;
-        break;
-      case "comments":
-        id = commentId;
-        break;
-      default:
-        throw new Error("Entity is not valid!");
-    }
-    const response = await fetch(`/${entity}/${id}`, {
-      method: "PUT",
+    const response = await fetch(`/${entity}`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         title: entity === "posts" ? title : undefined,
         text: text,
-        userId: entity === "comments" ? userId : undefined,
         postId: entity === "comments" ? postId : undefined,
-        commentId: entity === "comments" ? commentId : undefined,
+        userId: userId,
+        name: firstName,
+        surname: lastName,
+        username: username,
+        email: email,
+        password: password,
       }),
     });
     if (!response.ok) {

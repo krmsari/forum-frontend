@@ -4,7 +4,6 @@ import {
   Card,
   CardHeader,
   CardContent,
-  Typography,
   Avatar,
 } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
@@ -14,7 +13,7 @@ import UpdateIcon from "../Tools/UpdateIcon";
 
 function Comment(props) {
   const [isUpdate, setIsUpdate] = useState(false);
-  const { commentId, userId, text, author, refresh, postId } = props;
+  const { commentId, userId, postId, commentText, author, refresh } = props;
 
   return (
     <Card
@@ -43,10 +42,10 @@ function Comment(props) {
       <CardContent>
         <UpdateTool
           entity="comments"
-          id={commentId}
+          commentId={commentId}
           postId={postId}
           userId={userId}
-          text={text}
+          text={commentText}
           refreshPosts={refresh}
           isUpdate={isUpdate}
           setIsUpdate={setIsUpdate}

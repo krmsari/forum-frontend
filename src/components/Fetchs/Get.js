@@ -7,11 +7,9 @@ export const getData = async (entity,postId) => {
       },
     });
     const data = await response.json();
-    console.log(data);
     return data; 
   } catch (error) {
     console.error('Veri getirilirken bir hata oluştu: ', error);
-    return [];
   }
 };
 

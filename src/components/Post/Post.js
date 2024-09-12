@@ -41,7 +41,6 @@ function Post(props) {
 
   const fetchComments = async () => {
     const commentsData = await getData("comments", postId);
-    console.log(props);
     setComments(commentsData);
   };
 
@@ -153,7 +152,7 @@ function Post(props) {
             commentId={comment.id}
             postId={comment.postId}
             userId={comment.userId}
-            text={comment.text}
+            commentText={comment.text}
             author={comment.username}
             refresh={fetchComments}
           />
