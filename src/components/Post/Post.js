@@ -7,20 +7,23 @@ import {
   Collapse,
   IconButton,
   Typography,
+  Badge,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { red, grey } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import "./post.css";
 import { Link } from "react-router-dom";
-import { getData } from "../Fetchs/Get";
+import { getDatas } from "../Fetchs/Get";
 import CommentForm from "../Comment/CommentForm";
 import Comment from "../Comment/Comment";
 import UpdateTool from "../Tools/UpdateTool";
 import DeleteTool from "../Tools/DeleteTool";
 import UpdateIcon from "../Tools/UpdateIcon";
+import { updateData } from "../Fetchs/Update";
+import { deleteLike, updateLike } from "../Fetchs/Like";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,14 +36,23 @@ const ExpandMore = styled((props) => {
 }));
 
 function Post(props) {
-  const { postId, title, text, author, userId, refresh } = props;
+  const {
+    postId,
+    title,
+    text,
+    author,
+    userId,
+    refresh,
+    likeCount,
+    isLikedCurrentUser,
+  } = props;
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
 
   const fetchComments = async () => {
-    const commentsData = await getData("comments", postId);
+    const commentsData = await getDatas("comments", postId);
     setComments(commentsData);
   };
 
@@ -49,8 +61,18 @@ function Post(props) {
     setExpanded(!expanded);
   };
 
-  const handleLiked = () => {
-    setLiked(!liked);
+  useEffect(() => {
+    setLiked(isLikedCurrentUser);
+  }, [isLikedCurrentUser]);
+
+  const handleLike = () => {
+    if (liked) {
+      setLiked(false);
+      deleteLike(postId, userId);
+    } else if (!liked) {
+      setLiked(true);
+      updateLike(postId, userId);
+    }
   };
 
   return (
@@ -111,7 +133,7 @@ function Post(props) {
         alt="Post Image"
       />
       <UpdateTool
-        entity = "posts"
+        entity="posts"
         title={title}
         text={text}
         isUpdate={isUpdate}
@@ -120,8 +142,10 @@ function Post(props) {
         refreshPosts={refresh}
       />
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={handleLiked}>
-          <FavoriteIcon style={liked ? { color: "red" } : null} />
+        <IconButton aria-label="add to favorites" onClick={handleLike}>
+          <Badge badgeContent={likeCount} color="warning">
+            <FavoriteIcon style={liked ? { color: "red" } : null} />
+          </Badge>
         </IconButton>
 
         <DeleteTool entity="posts" id={postId} refresh={refresh} />

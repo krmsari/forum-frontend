@@ -48,6 +48,8 @@ function Home() {
             text={post.text}
             author={post.username}
             userId={post.userId}
+            likeCount = {post.likeCount}
+            isLikedCurrentUser = {post.isLikedCurrentUser}
             refresh={refreshPosts}
           />
         ))}
