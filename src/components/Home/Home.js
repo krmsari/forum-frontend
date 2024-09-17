@@ -4,7 +4,8 @@ import PostForm from "../Post/PostForm";
 import "./home.css";
 import { CircularProgress } from "@mui/material";
 
-function Home() {
+function Home(props) {
+  const { onDataChange } = props;
   const [error, setError] = useState(null); // error state yani, hata durumu
   const [isLoaded, setIsLoaded] = useState(false); // isLoaded state yani, yüklendi mi?
   const [postList, setPostList] = useState([]); // post state yani, veriler
@@ -51,6 +52,7 @@ function Home() {
             likeCount = {post.likeCount}
             isLikedCurrentUser = {post.isLikedCurrentUser}
             refresh={refreshPosts}
+            onDataChange={onDataChange}
           />
         ))}
       </div>

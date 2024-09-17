@@ -18,15 +18,16 @@ import {
 import {
   Edit as EditIcon,
   Email as EmailIcon,
-  LocationOn as LocationIcon,
-  Phone as PhoneIcon,
-  Settings as SettingsIcon,
-  Work as WorkIcon,
+  Comment as MarkChatUnread,
+  Work,
+  ThumbUp,
+  DynamicFeed
 } from "@mui/icons-material";
-
 
 function User(props) {
   const { user } = props;
+  const imageUrl = `data:image/jpeg;base64,${user.image}`;
+
   console.log(user);
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -37,7 +38,7 @@ function User(props) {
               <Box display="flex" flexDirection="column" alignItems="center">
                 <Avatar
                   alt={user.username}
-                  src="/placeholder.svg?height=200&width=200"
+                  src={imageUrl}
                   sx={{ width: 150, height: 150, mb: 2 }}
                 />
                 <Typography variant="h5" gutterBottom>
@@ -59,16 +60,27 @@ function User(props) {
               <List>
                 <ListItem>
                   <ListItemIcon>
-                    <EmailIcon />
+                    <EmailIcon style={{ color: "darkkhaki" }} />
                   </ListItemIcon>
                   <ListItemText primary={user.email} />
                 </ListItem>
-              
                 <ListItem>
                   <ListItemIcon>
-                    <LocationIcon />
+                    <DynamicFeed style={{ color: "darkgoldenrod" }} />
                   </ListItemIcon>
-                  {/* <ListItemText primary={user.location} /> */}
+                  <ListItemText primary={user.likeCount} />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <MarkChatUnread style={{ color: "darkgreen" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={user.commentCount} />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <ThumbUp style={{ color: "darkred" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={user.likeCount} />
                 </ListItem>
               </List>
             </Grid2>

@@ -16,7 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import "./post.css";
 import { Link } from "react-router-dom";
-import { getDatas } from "../Fetchs/Get";
+import { getData } from "../Fetchs/Get";
 import CommentForm from "../Comment/CommentForm";
 import Comment from "../Comment/Comment";
 import UpdateTool from "../Tools/UpdateTool";
@@ -52,7 +52,7 @@ function Post(props) {
   const [isUpdate, setIsUpdate] = useState(false);
 
   const fetchComments = async () => {
-    const commentsData = await getDatas("comments", postId);
+    const commentsData = await getData("comments", postId);
     setComments(commentsData);
   };
 

@@ -5,24 +5,32 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import User from "./components/User/User";
 import RegisterForm from "./components/User/RegisterForm";
-import { getData } from "./components/Fetchs/Get";
+import { getData, getDataById } from "./components/Fetchs/Get";
 import { useEffect, useState } from "react";
 
 function App() {
   // current user'a çevirilecek
   const [user, setUser] = useState({});
+
+  const fetchUser = async () => {
+    const user = await getData("users"); // Fetch user with id 1
+    setUser(user[0]);
+  };
+
   useEffect(() => {
-    getData("users").then((data) => {
-      setUser(data[0]);
-    });
-  }, []);
+    fetchUser();
+  }, [user]); // Depend on refresh state
 
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar></Navbar>
         <Routes>
-          <Route exact path="/" Component={Home} />
+          <Route
+            exact
+            path="/"
+            element={<Home/>}
+          />
           <Route exact path="/users/:userId" element={<User user={user} />} />
           <Route exact path="/users/register" Component={RegisterForm} />
         </Routes>
