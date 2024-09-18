@@ -7,21 +7,26 @@ import {
   OutlinedInput,
   InputAdornment,
   Button,
+  IconButton,
+  Box,
 } from "@mui/material";
 import React, { useState } from "react";
 import { red } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import Notice from "../Tools/Notice";
 import { postData } from "../Fetchs/PostData";
+import { PhotoCamera } from "@mui/icons-material";
+import { postImage } from "../Fetchs/Image";
 
 function PostForm(props) {
-  const { author, userId, refresh } = props;
+  const { user, refresh } = props;
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [isSent, setIsSent] = useState(false);
   const [message, setMessage] = useState("");
   const [state, setState] = useState("");
-
+  const [image, setImage] = useState("");
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
   const handleTitle = (title) => {
     setIsSent(false);
     setTitle(title);
@@ -32,11 +37,11 @@ function PostForm(props) {
     setText(text);
   };
 
-
   const handleSubmit = () => {
-    const data = postData("posts", text, undefined, userId, title);
+    const data = postData("posts", text, undefined, user.id, title);
     data.then((data) => {
       if (data) {
+        postImage("post", image, data);
         setMessage("Başarıyla gönderildi!");
         setState("success");
       } else {
@@ -48,6 +53,13 @@ function PostForm(props) {
     setIsSent(true);
     setTitle("");
     setText("");
+  };
+
+  const handleImageUpload = (event) => {
+    if (event.target.files[0]) {
+      setIsImageUploaded(true);
+      setImage(event.target.files[0]);
+    }
   };
 
   return (
@@ -66,13 +78,14 @@ function PostForm(props) {
         <CardHeader
           className="card-header"
           avatar={
-            <Link to={`/users/${userId}`}>
+            <Link to={`/users/${user.id}`}>
               <Avatar
                 sx={{ bgcolor: red[500] }}
                 aria-label="recipe"
                 className="author-profile"
+                src={`data:image/jpeg;base64,${user.image}`}
               >
-                {author[0].toUpperCase()}
+                {user.username}
               </Avatar>
             </Link>
           }
@@ -80,9 +93,9 @@ function PostForm(props) {
             <OutlinedInput
               id="outlined-adornment-amount"
               multiline
-              placeholder="Başlık"
+              placeholder="*Başlık"
               value={title}
-              inputProps={{ maxLength: 50 }}
+              inputProps={{ maxLength: 100 }}
               sx={{ fontSize: 14, height: 40, fontWeight: "bold" }}
               fullWidth
               onChange={(i) => handleTitle(i.target.value)}
@@ -92,36 +105,50 @@ function PostForm(props) {
             <Link
               style={{ fontSize: 14 }}
               className="author-name"
-              to={`users/${userId}`}
+              to={`users/${user.id}`}
             >
-              {author.toUpperCase()}
+              {user.username}
             </Link>
           }
         />
-        {/* ADD IMAGE BUTTON */}
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ marginTop: 2 }}
+        >
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+          >
+            <input type="file" hidden onChange={handleImageUpload} />
+            <PhotoCamera />
+          </IconButton>
+        </Box>
         <CardContent>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             <OutlinedInput
               id="outlined-adornment-amount"
               multiline
-              placeholder="Açıklama"
+              placeholder="*Açıklama"
               value={text}
               inputProps={{ maxLength: 500 }}
-              sx={{ fontSize: 14, height: 50, fontWeight: "bold" }}
+              sx={{ fontSize: 14, fontWeight: "bold" }}
               fullWidth
               onChange={(i) => handleText(i.target.value)}
               endAdornment={
-                <InputAdornment position="end">
+                <InputAdornment>
                   <Button
-                    sx={{ width: 15, fontSize: 10 }}
                     variant="contained"
                     style={{
                       backgroundColor:
                         "background: linear-gradient(45deg, #d2d2d2 30%, #fdfbfa 90%)",
                     }}
                     onClick={handleSubmit}
+                    disabled={text === "" || title === "" || !isImageUploaded}
                   >
-                    Gönder
+                    {isImageUploaded ? "Gönder" : "Gönderemezsiniz"}
                   </Button>
                 </InputAdornment>
               }

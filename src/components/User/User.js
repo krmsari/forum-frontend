@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -21,14 +21,21 @@ import {
   Comment as MarkChatUnread,
   Work,
   ThumbUp,
-  DynamicFeed
+  DynamicFeed,
 } from "@mui/icons-material";
 
 function User(props) {
   const { user } = props;
+  const [roles, setRoles] = useState([]);
   const imageUrl = `data:image/jpeg;base64,${user.image}`;
 
-  console.log(user);
+  useEffect(() => {
+    if (user.roles && Array.isArray(user.roles)) {
+      setRoles(user.roles);
+    } else {
+      console.log("User roles are not defined or not an array");
+    }
+  }, [user.roles]);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Container maxWidth="md" sx={{ mt: 4 }}>
@@ -95,9 +102,9 @@ function User(props) {
                   Roller
                 </Typography>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                  {/* {user.skills.map((skill) => (
-                    <Chip key={skill} label={skill} />
-                  ))} */}
+                  {roles.map((role) => (
+                    <Chip label={role.name} />
+                  ))}
                 </Box>
               </CardContent>
             </Card>

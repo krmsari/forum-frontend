@@ -22,7 +22,6 @@ import Comment from "../Comment/Comment";
 import UpdateTool from "../Tools/UpdateTool";
 import DeleteTool from "../Tools/DeleteTool";
 import UpdateIcon from "../Tools/UpdateIcon";
-import { updateData } from "../Fetchs/Update";
 import { deleteLike, updateLike } from "../Fetchs/Like";
 
 const ExpandMore = styled((props) => {
@@ -43,8 +42,10 @@ function Post(props) {
     author,
     userId,
     refresh,
+    image,
     likeCount,
     isLikedCurrentUser,
+    user
   } = props;
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -52,7 +53,7 @@ function Post(props) {
   const [isUpdate, setIsUpdate] = useState(false);
 
   const fetchComments = async () => {
-    const commentsData = await getData("comments", postId);
+    const commentsData = await getData("comments");
     setComments(commentsData);
   };
 
@@ -96,6 +97,7 @@ function Post(props) {
               sx={{ bgcolor: red[500] }}
               aria-label="recipe"
               className="author-profile"
+              src={`data:image/jpeg;base64,${user.image}`}
             >
               {author[0].toUpperCase()}
             </Avatar>
@@ -129,7 +131,7 @@ function Post(props) {
         }}
         component="img"
         height="194"
-        image="https://picsum.photos/1980/1080"
+        image={image}
         alt="Post Image"
       />
       <UpdateTool

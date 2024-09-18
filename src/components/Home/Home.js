@@ -5,13 +5,18 @@ import "./home.css";
 import { CircularProgress } from "@mui/material";
 
 function Home(props) {
-  const { onDataChange } = props;
+  const { user } = props;
   const [error, setError] = useState(null); // error state yani, hata durumu
   const [isLoaded, setIsLoaded] = useState(false); // isLoaded state yani, yüklendi mi?
   const [postList, setPostList] = useState([]); // post state yani, veriler
 
   const refreshPosts = () => {
-    fetch("/posts") // verileri çekmek için fetch kullanıyoruz
+    fetch("/posts",{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }) // verileri çekmek için fetch kullanıyoruz
       .then((res) => res.json()) // gelen veriyi json formatına çeviriyoruz
       .then(
         (result) => {
@@ -41,7 +46,7 @@ function Home(props) {
   } else {
     return (
       <div className="container-home">
-        <PostForm author={"kerem"} userId={1} refresh={refreshPosts} />
+        <PostForm user={user} refresh={refreshPosts} />
         {postList.map((post) => (
           <Post
             postId={post.id}
@@ -50,9 +55,10 @@ function Home(props) {
             author={post.username}
             userId={post.userId}
             likeCount = {post.likeCount}
+            image = {`data:image/jpeg;base64,${post.image}`}
             isLikedCurrentUser = {post.isLikedCurrentUser}
             refresh={refreshPosts}
-            onDataChange={onDataChange}
+            user={user}
           />
         ))}
       </div>

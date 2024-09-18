@@ -3,12 +3,15 @@ import {
   Button,
   Container,
   CssBaseline,
+  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { postData } from "../Fetchs/PostData";
 import Notice from "../Tools/Notice";
+import { PhotoCamera } from "@mui/icons-material";
+import { postImage } from "../Fetchs/Image";
 
 function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -19,6 +22,8 @@ function RegisterForm() {
   const [message, setMessage] = useState("");
   const [state, setState] = useState("");
   const [isSent, setIsSent] = useState(false);
+  const [image, setImage] = useState("");
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const handleFirstName = (firstName) => {
     setFirstName(firstName);
@@ -44,7 +49,12 @@ function RegisterForm() {
     setPassword(password);
     setIsSent(false);
   };
-
+  const handleImageUpload = (event) => {
+    if (event.target.files[0]) {
+      setIsImageUploaded(true);
+      setImage(event.target.files[0]);
+    }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     // Form verilerini işleme kodu buraya gelecek
@@ -62,6 +72,7 @@ function RegisterForm() {
     );
     data.then((data) => {
       if (data) {
+        postImage("user", image, data);
         setMessage("Başarıyla kayıt oldunuz!");
         setState("success");
       } else {
@@ -137,12 +148,28 @@ function RegisterForm() {
               value={password}
               onChange={(e) => handlePassword(e.target.value)}
             />
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ marginTop: 2 }}
+            >
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="label"
+              >
+                <input type="file" hidden onChange={handleImageUpload} />
+                <PhotoCamera />
+              </IconButton>
+            </Box>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!email || !password || !isImageUploaded}
               onClick={handleSubmit}
             >
               Kayıt Ol

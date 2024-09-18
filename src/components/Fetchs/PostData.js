@@ -33,8 +33,8 @@ export const postData = async (
       console.error("Sunucu hatası:", errorText);
       return false;
     }
-    await response.json();
-    return true;
+    
+    return await response.json();
   } catch (error) {
     console.log(error);
   }

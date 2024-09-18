@@ -15,6 +15,19 @@ function App() {
   const fetchUser = async () => {
     const user = await getData("users"); // Fetch user with id 1
     setUser(user[0]);
+    if (user.length === 0) {
+      user.id = 1;
+      user.name = "Guest";
+      user.surname = "";
+      user.username = "guest";
+      user.email = "";
+      user.password = "";
+      user.image = "";
+      user.posts = [];
+      user.comments = [];
+      user.likes = [];
+      setUser(user);
+    }
   };
 
   useEffect(() => {
@@ -24,13 +37,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar></Navbar>
+        <Navbar user={user}></Navbar>
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={<Home/>}
-          />
+          <Route exact path="/" element={<Home user={user} />} />
           <Route exact path="/users/:userId" element={<User user={user} />} />
           <Route exact path="/users/register" Component={RegisterForm} />
         </Routes>
