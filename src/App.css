@@ -3,7 +3,7 @@ body {
   overflow: auto; /* Kaydırma işlevselliğini korur */
   user-select: none;
 }
-
+ 
 /* Webkit tabanlı tarayıcılarda kaydırma çubuğunu gizlemek için */
 body::-webkit-scrollbar {
   width: 0; /* Dikey kaydırma çubuğunu gizler */
