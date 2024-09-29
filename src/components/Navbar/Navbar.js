@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 
-function Navbar(props) {
+function Navbar(props) { 
   const { user } = props;
   return (
     <AppBar
