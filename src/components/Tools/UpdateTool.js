@@ -6,7 +6,7 @@ import {
   InputAdornment,
   OutlinedInput,
   Typography,
-} from "@mui/material";
+} from "@mui/material"; 
 import { updateData } from "../Fetchs/Update";
 import Notice from "./Notice";
 
