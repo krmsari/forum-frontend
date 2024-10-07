@@ -8,7 +8,7 @@ function Navbar(props) {
   return (
     <AppBar
       position="static" 
-      sx={{
+      sx={{ 
         background: "linear-gradient(45deg, #0f0fb3 30%, #0059ac 90%)",
       }}
     >
