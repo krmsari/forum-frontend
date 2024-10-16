@@ -6,7 +6,7 @@ import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 function Navbar(props) { 
   const { user } = props;
   return (
-    <AppBar
+    <AppBar 
       position="static" 
       sx={{  
         background: "linear-gradient(45deg, #0f0fb3 30%, #0059ac 90%)",  
