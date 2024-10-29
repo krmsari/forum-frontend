@@ -7,7 +7,7 @@ function Navbar(props) {
   const { user } = props;
   return (
     <AppBar 
-      position="static" 
+      position="static"
       sx={{  
         background: "linear-gradient(45deg, #0f0fb3 30%, #0059ac 90%)",  
       }}
