@@ -1,4 +1,4 @@
-/* Tüm sayfalardaki kaydırma çubuğunu gizlemek için */
+ /* Tüm sayfalardaki kaydırma çubuğunu gizlemek için */
 body {
   overflow: auto; /* Kaydırma işlevselliğini korur */
   user-select: none;
