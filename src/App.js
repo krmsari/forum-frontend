@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import User from "./components/User/User";
 import RegisterForm from "./components/User/RegisterForm";
-import { getData, getDataById } from "./components/Fetchs/Get";
+import { getData, getDataById } from "./components/Fetchs/Get"; 
 import { useEffect, useState } from "react";
 
 function App() {
