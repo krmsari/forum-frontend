@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 
 ![Ekran görüntüsü 2024-09-18 103442](https://github.com/user-attachments/assets/dfe08d66-645b-4ce1-bd3e-5ec695c452a3)
-
+ 
 ![Ekran görüntüsü 2024-09-18 103455](https://github.com/user-attachments/assets/b941c479-9c7f-4e31-9063-1b9c90e4b6fb)
 ![Ekran görüntüsü 2024-09-18 103515](https://github.com/user-attachments/assets/e4223d19-28c2-4ee9-b281-8a5ff83b1a05)
 ![Ekran görüntüsü 2024-09-18 104002](https://github.com/user-attachments/assets/d3ff919e-d581-48e8-8db9-433dcda586ec)
